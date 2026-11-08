@@ -1,6 +1,12 @@
 name: Collect public job listings
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/collect.py'
+      - 'data/sources.json'
+      - '.github/workflows/collect.yml'
   schedule:
     - cron: '15 11 * * *'
 permissions:
