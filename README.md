@@ -2,6 +2,14 @@
 
 MVP de búsqueda y revisión de empleos, sin Lovable. **No postula automáticamente**.
 
+## Ver la aplicación
+
+- Web: https://dvrbuilder94.github.io/trabajoai/
+- **Modo demostración:** https://dvrbuilder94.github.io/trabajoai/?demo=1 (3 vacantes ficticias identificadas como tales).
+- Si la URL devuelve 404, ve a **Settings → Pages → Build and deployment → Source: GitHub Actions**. El workflow `Publish TrabajoAI dashboard` prepara el despliegue.
+- Los datos reales se cargarán tras una ejecución exitosa del workflow `Collect public job listings` en **Actions**. Las fuentes se configuran en `data/sources.json`.
+- GitHub Pages muestra contenido público. **No subir CV ni datos personales al sitio estático**; el CV maestro se guarda en una tabla interna de Supabase.
+
 ## Cómo funciona
 - Dashboard estático en `index.html`.
 - `scripts/collect.py` obtiene publicaciones de APIs públicas Greenhouse/Lever configuradas en `data/sources.json`.
