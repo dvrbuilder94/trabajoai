@@ -1,0 +1,29 @@
+{
+  "sources": [
+    {
+      "type": "greenhouse",
+      "company": "Stripe",
+      "slug": "stripe"
+    },
+    {
+      "type": "greenhouse",
+      "company": "Coinbase",
+      "slug": "coinbase"
+    },
+    {
+      "type": "greenhouse",
+      "company": "Plaid",
+      "slug": "plaid"
+    },
+    {
+      "type": "greenhouse",
+      "company": "Brex",
+      "slug": "brex"
+    },
+    {
+      "type": "lever",
+      "company": "Wise",
+      "slug": "wise"
+    }
+  ]
+}
