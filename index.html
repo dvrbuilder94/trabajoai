@@ -28,5 +28,17 @@ el('jobs').innerHTML=list.length?list.map(j=>'<article class="job"><span class="
 document.addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(!b)return;const {action,id}=b.dataset;if(action==='approve')setStatus(id,'approved');if(action==='reject')setStatus(id,'rejected');if(action==='detail'){const j=jobs.find(x=>x.id===id);if(!j)return;el('detailTitle').textContent=j.title;el('detailMeta').textContent=j.company+' · '+j.location;el('detailReason').textContent=j.reason+' (ranking orientativo)';el('detailDesc').textContent=j.description;el('detailLink').href=j.url;el('detail').showModal()}});
 document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('active',x===b));render()});el('query').oninput=render;el('work').onchange=render;el('sort').onchange=render;el('close').onclick=()=>el('detail').close();
 el('csv').onclick=()=>{const rows=[['Company','Title','Location','Score','Status','URL'],...jobs.map(j=>[j.company,j.title,j.location,j.score,status(j.id),j.url])];const csv=rows.map(r=>r.map(x=>'"'+String(x??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');const a=document.createElement('a');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.href=url;a.download='trabajoai-jobs.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
-fetch('./data/jobs.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Data not available');return r.json()}).then(data=>{jobs=Array.isArray(data)?data:[];el('loaded').textContent=jobs.length+' vacantes cargadas';render()}).catch(()=>{el('loaded').textContent='Sin datos';el('jobs').innerHTML='<div class="empty">No se pudo cargar data/jobs.json. Abre la app desde un servidor web.</div>'});
+const SUPABASE_URL='https://lpbqzagdforlafvavgkx.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY='sb_publishable_OLazvsr0InC3O_6Ox292LA_GDmsnZs6';
+async function loadListings(){
+  try {
+    const r=await fetch(SUPABASE_URL+'/rest/v1/job_listings?select=*&order=score.desc&limit=1000',
+      {headers:{apikey:SUPABASE_PUBLISHABLE_KEY,'Accept':'application/json'}});
+    if(r.ok){const data=await r.json();if(Array.isArray(data)&&data.length) return {data,source:'Supabase'};}
+  } catch(e){console.warn('Supabase unavailable',e);}
+  const r=await fetch('./data/jobs.json',{cache:'no-store'});
+  if(!r.ok)throw Error('Could not load data/jobs.json');
+  return {data:await r.json(),source:'GitHub'};
+}
+loadListings().then(({data,source})=>{jobs=Array.isArray(data)?data:[];el('loaded').textContent=jobs.length+' vacantes · '+source;render()}).catch(()=>{el('loaded').textContent='Sin datos';el('jobs').innerHTML='<div class="empty">No se pudieron cargar las vacantes. Comprueba la configuración de Supabase o ejecuta el recolector de GitHub.</div>'});
 </script></body></html>
