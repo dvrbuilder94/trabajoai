@@ -19,7 +19,7 @@ def get_json(url):
         return json.load(response)
 
 def plain(value):
-    return re.sub(r"\\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", value or ""))).strip()
+    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", value or ""))).strip()
 
 def format_job(company, external_id, title, location, description, url, date=""):
     if not url.startswith("https://"):
@@ -28,7 +28,7 @@ def format_job(company, external_id, title, location, description, url, date="")
     hits = [k for k in POSITIVE if k in title_l or k in desc_l]
     score = 0 if any(k in title_l for k in EXCLUDE) else min(
         99, 15 + sum(w if k in title_l else min(5, w//3) for k,w in POSITIVE.items() if k in hits))
-    remote = bool(re.search(r"\\bremote\\b|work from anywhere", title+" "+location, re.I))
+    remote = bool(re.search(r"\bremote\b|work from anywhere", title+" "+location, re.I))
     return {"id": hashlib.sha256(f"{company}:{external_id}".encode()).hexdigest()[:20],
             "company": company, "title": title, "location": location,
             "description": description[:7000], "url": url, "posted_at": str(date)[:10],
@@ -69,7 +69,7 @@ def main():
         print("All sources failed; preserving previous jobs.json", file=sys.stderr)
         return 1
     result = sorted(jobs.values(), key=lambda j: j["score"], reverse=True)
-    OUTPUT.write_text(json.dumps(result, ensure_ascii=False, indent=2)+"\\n", encoding="utf-8")
+    OUTPUT.write_text(json.dumps(result, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
     print(f"Saved {len(result)} public postings; failed sources: {', '.join(failures) or 'none'}")
     return 0
 
