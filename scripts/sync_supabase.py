@@ -7,6 +7,7 @@ If missing, this script safely exits without changing the DB.
 """
 import json
 import os
+import re
 import sys
 import urllib.error
 import urllib.request
@@ -21,6 +22,12 @@ CHUNK = 100
 def normalize(item, timestamp):
     url = item.get("url", "")
     if not isinstance(url, str) or not url.startswith("https://"):
+        return None
+    # A generic remote listing (especially US-remote) does not imply Chile eligibility.
+    loc = str(item.get("location") or "")
+    chile = bool(re.search(r"\\bchile\\b|\\bsantiago\\b", loc, re.I))
+    latam = bool(re.search(r"latin america|\\blatam\\b", loc, re.I))
+    if not (chile or latam):
         return None
     date = str(item.get("posted_at") or "")[:10]
     if not date or len(date) != 10:
@@ -41,7 +48,7 @@ def normalize(item, timestamp):
         "verification": str(item.get("verification") or "Public ATS posting; work eligibility unverified"),
         "metadata": {
             "reason": str(item.get("reason") or ""),
-            "geo_eligibility": "unknown",
+            "geo_eligibility": "confirmed" if chile else "needs_confirmation",
             "visa_sponsorship": "unknown",
             "source_type": "public_ats",
         },
@@ -62,7 +69,8 @@ def main():
     now = datetime.now(timezone.utc).isoformat()
     rows = [r for j in jobs if (r := normalize(j, now))]
     if not rows:
-        raise RuntimeError("No valid rows to import")
+        print("No postings with explicit Chile/LATAM location evidence; leaving database unchanged")
+        return 0
     endpoint = URL + "/rest/v1/job_listings?on_conflict=id"
     headers = {
         "apikey": KEY,
