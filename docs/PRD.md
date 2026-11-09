@@ -214,3 +214,14 @@ A user can open a verified live URL, sign in, see at least one independently che
 - Marked a WON posting with link failure after an external fetch returned HTTP 404. Availability and work eligibility must be independently checked before application.
 - Vercel production reads public listings directly from Supabase. Changes to data do not require redeploy; changes to collector code require GitHub Actions to run.
 - Next acceptance gate: independently verify job collector execution, source success/fail counts, write to Supabase via GitHub Action secrets, and weekly stale/closed handling.
+
+
+## Delivery log — 2026-11-09 00:50 UTC (ATS scan verified)
+- Verified GitHub Actions generated `data/source_health.json` with **1,832 fetched postings**, **304 title-matched postings**, **3 endpoint errors**, across 20 sources. This is a preliminary keyword match, not geographic eligibility or an application recommendation.
+- Inspected the full 304-job collector artifact through GitHub's blob API: **zero** have explicit Chile/LATAM in the primary location field, revealing a significant relevance gap. Many are US-Remote-only and are **not** Chile-remote jobs.
+- Updated collector to retain previous jobs on failed/empty scans, write per-source health, and use additional Lever/Ashby location fields when available.
+- Disabled three ATS endpoints with observed HTTP 404 (Plaid Greenhouse, Wise Lever, Apply Digital Ashby), leaving 17 active source configurations.
+- Added an explicit geo evidence gate in automatic Supabase sync: only Chile/Santiago or LATAM/Latin America locations qualify. LATAM-only still requires user-specific eligibility confirmation. This limits false positives, but may yield zero eligible jobs until stronger Latin American sources are added.
+- Updated four existing listings against indexed official ATS pages (including corrected Telepatia title/seniority and Yuno specialized TAM gap).
+- Seeded 12 curated international relocation candidates from the live GitHub collector artifact with sponsorship/salary clearly **unknown**. Supabase now has **25** candidate listings (8 explicitly Chile-located, 12 relocation candidates).
+- Caveat: GitHub workflow has not been verified end-to-end for Supabase sync; required Actions secrets may still be missing. These database records were inserted through the connected Supabase tool.
