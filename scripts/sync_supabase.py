@@ -25,8 +25,8 @@ def normalize(item, timestamp):
         return None
     # A generic remote listing (especially US-remote) does not imply Chile eligibility.
     loc = str(item.get("location") or "")
-    chile = bool(re.search(r"\\bchile\\b|\\bsantiago\\b", loc, re.I))
-    latam = bool(re.search(r"latin america|\\blatam\\b", loc, re.I))
+    chile = bool(re.search(r"\bchile\b|\bsantiago\b", loc, re.I))
+    latam = bool(re.search(r"latin america|\blatam\b", loc, re.I))
     if not (chile or latam):
         return None
     date = str(item.get("posted_at") or "")[:10]
