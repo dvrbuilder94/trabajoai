@@ -70,6 +70,7 @@ el('csv').onclick=()=>{const rows=[['Company','Title','Location','Score','Status
 const SUPABASE_URL='https://lpbqzagdforlafvavgkx.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_OLazvsr0InC3O_6Ox292LA_GDmsnZs6';
 async function loadListings(){
+  if(isDemo())return {data:DEMO_JOBS,source:'Demostración'};
   try {
     const r=await fetch(SUPABASE_URL+'/rest/v1/job_listings?select=*&order=score.desc&limit=1000',
       {headers:{apikey:SUPABASE_PUBLISHABLE_KEY,'Accept':'application/json'}});
