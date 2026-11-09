@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-09T00:50:39.317042+00:00",
+  "checked_at": "2026-11-09T00:54:06.049822+00:00",
   "sources": [
     {
       "company": "Stripe",
@@ -8,7 +8,7 @@
       "status": "ok",
       "fetched": 766,
       "matching": 199,
-      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+      "checked_at": "2026-11-09T00:54:06.049822+00:00"
     },
     {
       "company": "Coinbase",
@@ -17,17 +17,16 @@
       "status": "ok",
       "fetched": 283,
       "matching": 22,
-      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+      "checked_at": "2026-11-09T00:54:06.049822+00:00"
     },
     {
       "company": "Plaid",
       "type": "greenhouse",
       "slug": "plaid",
-      "status": "error",
+      "status": "disabled",
       "fetched": 0,
       "matching": 0,
-      "checked_at": "2026-11-09T00:50:39.317042+00:00",
-      "error": "HTTP Error 404: Not Found"
+      "checked_at": "2026-11-09T00:54:06.049822+00:00"
     },
     {
       "company": "Brex",
@@ -36,17 +35,16 @@
       "status": "ok",
       "fetched": 268,
       "matching": 42,
-      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+      "checked_at": "2026-11-09T00:54:06.049822+00:00"
     },
     {
       "company": "Wise",
       "type": "lever",
       "slug": "wise",
-      "status": "error",
+      "status": "disabled",
       "fetched": 0,
       "matching": 0,
-      "checked_at": "2026-11-09T00:50:39.317042+00:00",
-      "error": "HTTP Error 404: Not Found"
+      "checked_at": "2026-11-09T00:54:06.049822+00:00"
     },
     {
       "company": "Paymentology",
@@ -55,7 +53,7 @@
       "status": "ok",
       "fetched": 8,
       "matching": 0,
-      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+      "checked_at": "2026-11-09T00:54:06.049822+00:00"
     },
     {
       "company": "Kraken",
@@ -64,7 +62,7 @@
       "status": "ok",
       "fetched": 89,
       "matching": 5,
-      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+      "checked_at": "2026-11-09T00:54:06.049822+00:00"
     },
     {
       "company": "The Global Talent Co.",
@@ -73,7 +71,7 @@
       "status": "ok",
       "fetched": 28,
       "matching": 3,
-      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+      "checked_at": "2026-11-09T00:54:06.049822+00:00"
     },
     {
       "company": "Scale Army",
@@ -82,17 +80,16 @@
       "status": "ok",
       "fetched": 59,
       "matching": 1,
-      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+      "checked_at": "2026-11-09T00:54:06.049822+00:00"
     },
     {
       "company": "Apply Digital",
       "type": "ashby",
       "slug": "applydigital",
-      "status": "error",
+      "status": "disabled",
       "fetched": 0,
       "matching": 0,
-      "checked_at": "2026-11-09T00:50:39.317042+00:00",
-      "error": "HTTP Error 404: Not Found"
+      "checked_at": "2026-11-09T00:54:06.049822+00:00"
     },
     {
       "company": "WON",
@@ -101,7 +98,7 @@
       "status": "empty",
       "fetched": 0,
       "matching": 0,
-      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+      "checked_at": "2026-11-09T00:54:06.049822+00:00"
     },
     {
       "company": "Telepatia",
@@ -110,7 +107,7 @@
       "status": "empty",
       "fetched": 0,
       "matching": 0,
-      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+      "checked_at": "2026-11-09T00:54:06.049822+00:00"
     },
     {
       "company": "Yuno",
@@ -119,7 +116,7 @@
       "status": "ok",
       "fetched": 11,
       "matching": 3,
-      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+      "checked_at": "2026-11-09T00:54:06.049822+00:00"
     },
     {
       "company": "Binance",
@@ -128,7 +125,7 @@
       "status": "ok",
       "fetched": 4,
       "matching": 1,
-      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+      "checked_at": "2026-11-09T00:54:06.049822+00:00"
     },
     {
       "company": "DEUNA",
@@ -137,7 +134,7 @@
       "status": "ok",
       "fetched": 17,
       "matching": 3,
-      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+      "checked_at": "2026-11-09T00:54:06.049822+00:00"
     },
     {
       "company": "Apply Digital",
@@ -146,7 +143,7 @@
       "status": "ok",
       "fetched": 10,
       "matching": 0,
-      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+      "checked_at": "2026-11-09T00:54:06.049822+00:00"
     },
     {
       "company": "Despegar",
@@ -155,7 +152,7 @@
       "status": "ok",
       "fetched": 115,
       "matching": 3,
-      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+      "checked_at": "2026-11-09T00:54:06.049822+00:00"
     },
     {
       "company": "Minders",
@@ -164,7 +161,7 @@
       "status": "ok",
       "fetched": 22,
       "matching": 0,
-      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+      "checked_at": "2026-11-09T00:54:06.049822+00:00"
     },
     {
       "company": "Emma",
@@ -173,7 +170,7 @@
       "status": "ok",
       "fetched": 67,
       "matching": 8,
-      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+      "checked_at": "2026-11-09T00:54:06.049822+00:00"
     },
     {
       "company": "Aircall",
@@ -182,10 +179,10 @@
       "status": "ok",
       "fetched": 85,
       "matching": 14,
-      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+      "checked_at": "2026-11-09T00:54:06.049822+00:00"
     }
   ],
   "total_fetched": 1832,
   "matched": 304,
-  "failed": 3
+  "failed": 0
 }
