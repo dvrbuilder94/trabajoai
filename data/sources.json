@@ -24,6 +24,81 @@
       "type": "lever",
       "company": "Wise",
       "slug": "wise"
+    },
+    {
+      "type": "ashby",
+      "company": "Paymentology",
+      "slug": "paymentology"
+    },
+    {
+      "type": "ashby",
+      "company": "Kraken",
+      "slug": "kraken.com"
+    },
+    {
+      "type": "ashby",
+      "company": "The Global Talent Co.",
+      "slug": "the-global-talent-co"
+    },
+    {
+      "type": "ashby",
+      "company": "Scale Army",
+      "slug": "Scale Army Careers"
+    },
+    {
+      "type": "ashby",
+      "company": "Apply Digital",
+      "slug": "applydigital"
+    },
+    {
+      "type": "ashby",
+      "company": "WON",
+      "slug": "won.ai"
+    },
+    {
+      "type": "ashby",
+      "company": "Telepatia",
+      "slug": "telepatia"
+    },
+    {
+      "type": "lever",
+      "company": "Yuno",
+      "slug": "yuno"
+    },
+    {
+      "type": "lever",
+      "company": "Binance",
+      "slug": "binance"
+    },
+    {
+      "type": "lever",
+      "company": "DEUNA",
+      "slug": "deuna"
+    },
+    {
+      "type": "lever",
+      "company": "Apply Digital",
+      "slug": "applydigital"
+    },
+    {
+      "type": "lever",
+      "company": "Despegar",
+      "slug": "despegar"
+    },
+    {
+      "type": "lever",
+      "company": "Minders",
+      "slug": "minders"
+    },
+    {
+      "type": "lever",
+      "company": "Emma",
+      "slug": "emma-sleep"
+    },
+    {
+      "type": "greenhouse",
+      "company": "Aircall",
+      "slug": "aircallioinc"
     }
   ]
 }
