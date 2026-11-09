@@ -6,6 +6,7 @@ on:
     paths:
       - 'scripts/collect.py'
       - 'scripts/sync_supabase.py'
+      - 'scripts/audit_links.py'
       - 'data/sources.json'
       - '.github/workflows/collect.yml'
   schedule:
@@ -31,6 +32,12 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: python scripts/sync_supabase.py
+      - name: Audit existing job links
+        if: always()
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: python scripts/audit_links.py
       - name: Update public jobs JSON
         run: |
           git config user.name 'github-actions[bot]'
