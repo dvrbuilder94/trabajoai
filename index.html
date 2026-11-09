@@ -46,7 +46,7 @@ dialog{box-shadow:0 32px 90px #0009}
 <section class="metrics"><div class="metric"><b id="total">0</b><span>En seguimiento (no cerradas)</span></div><div class="metric"><b id="high">0</b><span>Encaje ≥ 70 (no cerradas)</span></div><div class="metric"><b id="pending">0</b><span>Por revisar</span></div><div class="metric"><b id="approved">0</b><span>Aprobadas, no enviadas</span></div></section>
 <div class="toolbar" id="tabs"><button data-tab="all" class="active">Todas</button><button data-tab="review">Por revisar</button><button data-tab="approved">Aprobadas</button><button data-tab="rejected">Descartadas</button><button id="csv">Exportar CSV</button></div>
 <div class="toolbar"><input id="query" placeholder="Buscar empresa, cargo o país..." aria-label="Buscar">
-<select id="availability" aria-label="Estado de la oferta"><option value="reviewed">Enlaces revisados</option><option value="ats">Incluye ATS reciente</option><option value="all">Todas menos cerradas</option><option value="closed">Cerradas / desactualizadas</option></select>
+<select id="availability" aria-label="Estado de la oferta"><option value="reviewed">Ofertas confirmadas</option><option value="reachable">También páginas accesibles</option><option value="ats">Incluye ATS reciente</option><option value="all">Todas menos cerradas</option><option value="closed">Cerradas / desactualizadas</option></select>
 <select id="geo" aria-label="Lugar de trabajo"><option value="all">Todos los lugares</option><option value="remote_chile">Remoto desde Chile</option><option value="santiago">Santiago</option><option value="chile_regions">Otras ciudades de Chile</option><option value="abroad">Fuera de Chile / relocation</option></select>
 <select id="work" aria-label="Modalidad"><option value="all">Todas las modalidades</option><option value="remote">Remoto</option><option value="hybrid">Híbrido</option><option value="onsite">Presencial</option><option value="unknown">Sin confirmar</option></select>
 <select id="sort"><option value="score">Mayor puntaje</option><option value="date">Más reciente</option></select></div>
@@ -94,7 +94,7 @@ function render(){
  const work=el('work').value,geo=el('geo').value,availability=el('availability').value,sort=el('sort').value;
  let list=jobs.filter(j=>{
   const state=availabilityOf(j);
-  const allowed=availability==='reviewed'?['verified','page_reachable'].includes(state):
+  const allowed=availability==='reviewed'?state==='verified':availability==='reachable'?['verified','page_reachable'].includes(state):
     availability==='ats'?['verified','page_reachable','ats_listed'].includes(state):
     availability==='closed'?state==='closed':state!=='closed';
   return allowed&&(tab==='all'||status(j.id)===tab)&&(work==='all'||arrangementOf(j)===work)&&
@@ -122,7 +122,7 @@ function render(){
    '<p>'+escapeHTML(j.reason||'')+'</p>'+
    '<p style="color:#d6b985">'+escapeHTML(j.verification||'Sin verificación reciente')+'</p>'+
    '<div class="actions"><button data-action="detail" data-id="'+escapeHTML(j.id)+'">Ver detalle</button>'+original+'<span class="muted">'+({review:'Por revisar',approved:'Aprobada (sin enviar)',rejected:'Descartada'}[status(j.id)]||'Por revisar')+'</span>'+actionButtons+'</div></article>';
- }).join(''):'<div class="empty">No hay ofertas que cumplan estos filtros. Prueba «Incluye ATS reciente» o «Todas menos cerradas». Las ofertas con enlace caído quedan separadas en «Cerradas / desactualizadas».</div>';
+ }).join(''):'<div class="empty">No hay ofertas que cumplan estos filtros. Prueba «También páginas accesibles» o «Incluye ATS reciente». Las ofertas con enlace caído quedan separadas en «Cerradas / desactualizadas».</div>';
 }
 
 document.addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(!b)return;const {action,id}=b.dataset;if(action==='approve'){const job=jobs.find(x=>x.id===id);if(job&&availabilityOf(job)!=='closed')setStatus(id,'approved')}if(action==='reject')setStatus(id,'rejected');if(action==='detail'){const j=jobs.find(x=>x.id===id);if(!j)return;el('detailTitle').textContent=j.title;el('detailMeta').textContent=j.company+' · '+j.location+' · '+locationLabel(j)+' · '+arrangementLabel(arrangementOf(j));el('detailReason').textContent=(j.reason||'')+' · '+availabilityLabel(availabilityOf(j))+' · '+(j.verification||'');el('detailDesc').textContent=j.description;el('detailLink').hidden=availabilityOf(j)==='closed';el('detailLink').href=availabilityOf(j)==='closed'?'#':j.url;el('detail').showModal()}});
