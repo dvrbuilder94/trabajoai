@@ -41,6 +41,13 @@ dialog{box-shadow:0 32px 90px #0009}
 <div class="toolbar" id="tabs"><button data-tab="all" class="active">Todas</button><button data-tab="review">Por revisar</button><button data-tab="approved">Aprobadas</button><button data-tab="rejected">Descartadas</button><button id="csv">Exportar CSV</button></div>
 <div class="toolbar"><input id="query" placeholder="Buscar empresa, cargo o país..." aria-label="Buscar"><select id="work"><option value="all">Todas las modalidades</option><option value="remote">Remoto (sin verificar elegibilidad)</option><option value="other">Otras</option></select><select id="sort"><option value="score">Mayor puntaje</option><option value="date">Más reciente</option></select></div>
 <section id="jobs" class="jobs" aria-live="polite"></section>
+<section id="cvPanel" style="border:1px solid #31517c;border-radius:14px;padding:20px;margin:25px 0;background:#121e31">
+  <h2 style="margin-top:0">Mi perfil y CV maestro</h2>
+  <p class="muted">Editor privado disponible al iniciar sesión. El documento importado previamente está en una tabla privada de preparación hasta vincularlo a tu cuenta. No se publicará en GitHub.</p>
+  <textarea id="cvMaster" disabled placeholder="Inicia sesión para consultar o guardar tu perfil profesional." style="box-sizing:border-box;width:100%;min-height:210px;background:#0c182a;color:#e9effd;border:1px solid #3b5071;border-radius:10px;padding:13px;font-family:inherit;font-size:13px;line-height:1.6"></textarea>
+  <p id="cvMessage" class="muted" role="status">Inicia sesión para gestionar tu CV.</p>
+  <div class="actions"><button id="cvSave" class="primary" disabled>Guardar CV</button><button id="cvRefresh">Actualizar desde Supabase</button><button id="cvDownload" disabled>Exportar TXT</button></div>
+</section>
 <p class="notice">MVP · Los resultados proceden de APIs públicas de empleo, sin verificación de patrocinio migratorio o elegibilidad desde Chile. Los puntajes son heurísticos. Los estados se guardan solo en este navegador. Este repositorio es público: no publiques información personal ni CV.</p>
 </main>
 <dialog id="loginDialog"><h2>Acceso personal</h2><p class="muted">Ingresa tu correo para recibir un enlace de acceso. Tus decisiones se guardarán en Supabase. Sin iniciar sesión puedes explorar ofertas, pero las aprobaciones no se sincronizan.</p><form id="loginForm"><label for="loginEmail">Correo electrónico</label><input id="loginEmail" type="email" required autocomplete="email" style="width:100%;margin:12px 0" placeholder="tu@correo.com"><p id="loginMessage" class="muted" role="status"></p><div class="actions"><button class="primary" type="submit">Enviar enlace</button><button id="dismissLogin" type="button">Cerrar</button></div></form></dialog><dialog id="detail"><h2 id="detailTitle"></h2><p id="detailMeta" class="muted"></p><p id="detailReason"></p><div id="detailDesc" class="desc"></div><p><a id="detailLink" target="_blank" rel="noopener noreferrer">Ver publicación original</a></p><button id="close">Cerrar</button></dialog>
@@ -54,9 +61,9 @@ const DEMO_JOBS=[
 const isDemo=()=>new URLSearchParams(location.search).has('demo');
 if(isDemo()){document.getElementById('modeTitle').textContent='Modo demostración · Datos ficticios';document.getElementById('modeDescription').textContent='Estas tres vacantes son ejemplos de interfaz, no empleos publicados.';document.getElementById('modeLink').textContent='Ver empleos reales';document.getElementById('modeLink').href=location.pathname;}
 const el=id=>document.getElementById(id);
-const statuses=()=>{try{return window.trabajoAuth?.isLoggedIn()?(window.remoteStatuses||{}):JSON.parse(localStorage.getItem('trabajoai-status')||'{}')}catch{return {}}};
+const statuses=()=>{try{return !isDemo()&&window.trabajoAuth?.isLoggedIn()?(window.remoteStatuses||{}):JSON.parse(localStorage.getItem('trabajoai-status')||'{}')}catch{return {}}};
 const status=id=>statuses()[id]||'review';
-async function setStatus(id,value){if(window.trabajoAuth?.isLoggedIn()){try{await window.trabajoAuth.setDecision(id,value);window.remoteStatuses={...(window.remoteStatuses||{}),[id]:value};render()}catch(err){alert('No se pudo guardar en Supabase: '+err.message)}}else{const m=statuses();m[id]=value;localStorage.setItem('trabajoai-status',JSON.stringify(m));render()}}
+async function setStatus(id,value){if(isDemo()){const m=statuses();m[id]=value;localStorage.setItem('trabajoai-status',JSON.stringify(m));render();return;}if(window.trabajoAuth?.isLoggedIn()){try{await window.trabajoAuth.setDecision(id,value);window.remoteStatuses={...(window.remoteStatuses||{}),[id]:value};render()}catch(err){alert('No se pudo guardar en Supabase: '+err.message)}}else{const m=statuses();m[id]=value;localStorage.setItem('trabajoai-status',JSON.stringify(m));render()}}
 const escapeHTML=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function render(){const query=el('query').value.toLowerCase(),work=el('work').value,sort=el('sort').value;
 let list=jobs.filter(j=>(tab==='all'||status(j.id)===tab)&&(work==='all'||j.work_type===work)&&[j.title,j.company,j.location,j.description].join(' ').toLowerCase().includes(query));
@@ -81,4 +88,4 @@ async function loadListings(){
   return {data:await r.json(),source:'GitHub'};
 }
 loadListings().then(({data,source})=>{jobs=isDemo()?DEMO_JOBS:(Array.isArray(data)?data:[]);el('loaded').textContent=isDemo()?'MODO DEMO · datos ficticios':jobs.length+' vacantes · '+source;render()}).catch(()=>{el('loaded').textContent='Sin datos';el('jobs').innerHTML='<div class="empty">No se pudieron cargar las vacantes. Comprueba la configuración de Supabase o ejecuta el recolector de GitHub.</div>'});
-document.addEventListener('trabajo-decisions-change',render);document.addEventListener('trabajo-auth-change',render);</script><script src="./auth.js" defer></script></body></html>
+document.addEventListener('trabajo-decisions-change',render);document.addEventListener('trabajo-auth-change',render);</script><script src="./auth.js" defer></script><script src="./profile.js" defer></script></body></html>
