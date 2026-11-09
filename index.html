@@ -36,6 +36,7 @@ dialog{box-shadow:0 32px 90px #0009}
 </style></head>
 <body><header><div><strong>◈ TrabajoAI</strong><div class="muted" style="font-size:12px">JobHunter · revisión personal de oportunidades</div></div><small id="loaded">Cargando...</small></header>
 <main><h1>Oportunidades</h1><p class="muted">Las postulaciones solo se enviarán con tu aprobación explícita cuando implementemos esa función.</p>
+<div id="modeInfo" style="display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;border:1px solid #31517c;background:linear-gradient(130deg,#122a49,#122136);border-radius:13px;padding:14px 17px;margin:22px 0"><div><strong id="modeTitle">Ofertas públicas</strong><div id="modeDescription" class="muted" style="font-size:12px;margin-top:5px">Si aún no hay vacantes, revisa una demostración del flujo visual.</div></div><a id="modeLink" href="?demo=1" style="border:1px solid #4d79bf;padding:9px 12px;border-radius:9px;text-decoration:none">Ver demo visual</a></div>
 <section class="metrics"><div class="metric"><b id="total">0</b><span>Vacantes</span></div><div class="metric"><b id="high">0</b><span>Encaje ≥ 70</span></div><div class="metric"><b id="pending">0</b><span>Por revisar</span></div><div class="metric"><b id="approved">0</b><span>Aprobadas, no enviadas</span></div></section>
 <div class="toolbar" id="tabs"><button data-tab="all" class="active">Todas</button><button data-tab="review">Por revisar</button><button data-tab="approved">Aprobadas</button><button data-tab="rejected">Descartadas</button><button id="csv">Exportar CSV</button></div>
 <div class="toolbar"><input id="query" placeholder="Buscar empresa, cargo o país..." aria-label="Buscar"><select id="work"><option value="all">Todas las modalidades</option><option value="remote">Remoto (sin verificar elegibilidad)</option><option value="other">Otras</option></select><select id="sort"><option value="score">Mayor puntaje</option><option value="date">Más reciente</option></select></div>
@@ -50,7 +51,9 @@ const DEMO_JOBS=[
 {id:'demo-two',company:'Empresa de pagos (ejemplo)',title:'Business Development Lead — Spanish Markets',location:'Miami · Relocation por confirmar (simulación)',description:'Vacante ficticia para probar la interfaz. No corresponde a una publicación de empleo real.',url:'https://github.com/dvrbuilder94/trabajoai',posted_at:'',work_type:'other',score:89,reason:'Demo de matching · español, partnerships, fintech'},
 {id:'demo-three',company:'Empresa tecnológica (ejemplo)',title:'AI Product Strategy Manager',location:'Remote · Worldwide (simulación)',description:'Vacante ficticia para probar el dashboard. No es una oferta real.',url:'https://github.com/dvrbuilder94/trabajoai',posted_at:'',work_type:'remote',score:84,reason:'Demo de matching · producto, estrategia, IA'}
 ];
-const isDemo=()=>new URLSearchParams(location.search).has('demo');const el=id=>document.getElementById(id);
+const isDemo=()=>new URLSearchParams(location.search).has('demo');
+if(isDemo()){document.getElementById('modeTitle').textContent='Modo demostración · Datos ficticios';document.getElementById('modeDescription').textContent='Estas tres vacantes son ejemplos de interfaz, no empleos publicados.';document.getElementById('modeLink').textContent='Ver empleos reales';document.getElementById('modeLink').href=location.pathname;}
+const el=id=>document.getElementById(id);
 const statuses=()=>{try{return JSON.parse(localStorage.getItem('trabajoai-status')||'{}')}catch{return {}}};
 const status=id=>statuses()[id]||'review';
 function setStatus(id,value){const m=statuses();m[id]=value;localStorage.setItem('trabajoai-status',JSON.stringify(m));render()}
