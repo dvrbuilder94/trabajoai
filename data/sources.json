@@ -105,6 +105,21 @@
       "type": "greenhouse",
       "company": "Aircall",
       "slug": "aircallioinc"
+    },
+    {
+      "type": "greenhouse",
+      "company": "Ebury",
+      "slug": "ebury"
+    },
+    {
+      "type": "greenhouse",
+      "company": "EBANX",
+      "slug": "ebanx"
+    },
+    {
+      "type": "lever",
+      "company": "Aleph",
+      "slug": "aleph"
     }
   ]
 }
