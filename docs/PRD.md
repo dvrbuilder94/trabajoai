@@ -122,7 +122,10 @@ Measure: unique open roles/new roles per run; percent with working official link
 - [x] Initial Supabase schema committed and applied.
 - [x] Existing CV text imported into internal Supabase staging table.
 - [ ] Confirm live GitHub Pages deployment succeeds and app loads on mobile.
-- [ ] Run collector successfully and ingest actual openings; verify active URLs.
+- [ ] Confirm scheduled collector runs successfully and produces fresh postings from source APIs (unverified as of latest check).
+- [x] Seed three real-source job *candidates* in Supabase, explicitly marked as not independently verified for application availability or Chile eligibility.
+- [x] Commit GitHub Actions → Supabase sync script with server-side credentials and fallback to public JSON.
+- [ ] Configure GitHub Actions secrets and verify end-to-end DB sync; verify links and location requirements.
 - [ ] Display real jobs with evidence, refresh timestamp and **no demo leakage**.
 - [ ] Run basic security verification of private CV staging area and RLS.
 
@@ -149,7 +152,7 @@ Measure: unique open roles/new roles per run; percent with working official link
 
 **GitHub:** `index.html`, `scripts/collect.py`, `data/sources.json`, `data/jobs.json`, workflows `collect.yml` and `pages.yml`, `supabase/schema.sql`. UI approvals are stored locally in browser and **do not submit anything**. Source list is small and collection has not been verified end to end. GitHub Pages publication has not yet been independently verified.
 
-**Supabase:** AIJOBS project was connected; four initial `public` tables exist with RLS, plus restricted `internal.cv_imports` with one 3,099-character CV import. There were zero Auth users at last check and zero job listings. The internal staging table's RLS state requires a separate review; restricted-schema grants should not be mistaken for a completed security audit.
+**Supabase:** AIJOBS project was connected; four initial `public` tables exist with RLS, plus restricted `internal.cv_imports` with one 3,099-character CV import. There were zero Auth users at last check. Three real-source job candidates were manually seeded on 2026-11-08; all remain unverified for Chile eligibility and application status. The internal staging table's RLS state requires a separate review; restricted-schema grants should not be mistaken for a completed security audit.
 
 ## 10. Risks and open decisions
 
