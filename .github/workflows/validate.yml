@@ -30,3 +30,4 @@ jobs:
           Path('/tmp/trabajoai-app.js').write_text(snippets[0])
           PY
           node --check /tmp/trabajoai-app.js
+          node --check auth.js
