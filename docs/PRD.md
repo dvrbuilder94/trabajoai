@@ -195,3 +195,12 @@ A user can open a verified live URL, sign in, see at least one independently che
 - CI checks `profile.js` syntax; Pages workflow watches changes to it.
 - Verified policies in database: `candidate_profiles`, `cv_variants`, `job_decisions` are owner-scoped with `auth.uid() = user_id`; `job_listings` is publicly readable.
 - **Outstanding:** GitHub Pages and login not tested in browser; original CV staged privately and not yet associated to registered user; no job submitted; `internal.cv_imports` RLS advisory still pending review.
+
+
+## Delivery log — 2026-11-08 (first Vercel deployment)
+- Created Vercel project `trabajoai` (ID `prj_3dGIxwRFyoeSVdj6Bt6QjEyqJYjC`).
+- Deployed production code from GitHub file snapshots via Vercel API; deployment `dpl_9Sk8Kr9PPeHDrg4a59RRaFuZDoTN` reports `READY` and assigned `https://trabajoai.vercel.app/`.
+- Changed Vercel Authentication protection scope to preview deployments so production can be visited publicly; Supabase personal data still protected by RLS.
+- **External HTTP/smoke test not completed**: browser/web fetch could not independently access URL from this environment. Verify live page manually.
+- **Git automatic deploy not linked**: Vercel GitHub integration reported `repo_not_found` / `github_response_error` (401). Current deployment is a snapshot; future GitHub commits must be manually redeployed until integration is repaired.
+- **Auth still needs redirect allowlist** for `https://trabajoai.vercel.app/` in Supabase Auth; do not assert login works before an authenticated test.
