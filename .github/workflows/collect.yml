@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/collect.py'
+      - 'scripts/sync_supabase.py'
       - 'data/sources.json'
       - '.github/workflows/collect.yml'
   schedule:
@@ -22,6 +23,11 @@ jobs:
           python-version: '3.12'
       - name: Collect public vacancies
         run: python scripts/collect.py
+      - name: Sync public listings to Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: python scripts/sync_supabase.py
       - name: Update public jobs JSON
         run: |
           git config user.name 'github-actions[bot]'
