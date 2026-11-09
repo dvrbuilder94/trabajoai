@@ -33,14 +33,24 @@ button.active,button.primary{background:linear-gradient(130deg,#336fe7,#255ac3);
 .empty{background:#121e31;padding:40px;border-color:#3a5476;line-height:1.7}
 dialog{box-shadow:0 32px 90px #0009}
 @media(min-width:900px){.jobs{grid-template-columns:repeat(2,minmax(0,1fr))}.job{min-height:255px}}
+.classifications{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.classification{font-size:12px;line-height:1.2;display:inline-flex;align-items:center;gap:4px;border:1px solid #4e668a;background:#182b44;color:#cce0ff;border-radius:999px;padding:6px 9px}
+.classification.warn{border-color:#82643b;background:#372818;color:#f2d29b}
+.classification.ok{border-color:#357f78;background:#142f32;color:#a8ead8}
+#listingSummary{font-size:13px;color:#b2c5e2;margin:0 0 15px}
+@media(max-width:680px){#geo,#availability,#work,#sort{min-width:calc(50% - 4px);flex:1}.toolbar input{width:100%}}
 </style></head>
 <body><header><div><strong>◈ TrabajoAI</strong><div class="muted" style="font-size:12px">JobHunter · revisión personal de oportunidades</div></div><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><small id="loaded">Cargando...</small><button id="accountButton" type="button">Iniciar sesión</button></div></header>
-<main><h1>Oportunidades</h1><p class="muted">Las postulaciones solo se enviarán con tu aprobación explícita cuando implementemos esa función.</p>
+<main><h1>Oportunidades</h1><p class="muted">Primero validamos el enlace y la ubicación real. Las postulaciones requieren tu aprobación.</p>
 <div id="modeInfo" style="display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;border:1px solid #31517c;background:linear-gradient(130deg,#122a49,#122136);border-radius:13px;padding:14px 17px;margin:22px 0"><div><strong id="modeTitle">Ofertas públicas</strong><div id="modeDescription" class="muted" style="font-size:12px;margin-top:5px">Si aún no hay vacantes, revisa una demostración del flujo visual.</div></div><a id="modeLink" href="?demo=1" style="border:1px solid #4d79bf;padding:9px 12px;border-radius:9px;text-decoration:none">Ver demo visual</a></div>
-<section class="metrics"><div class="metric"><b id="total">0</b><span>Vacantes</span></div><div class="metric"><b id="high">0</b><span>Encaje ≥ 70</span></div><div class="metric"><b id="pending">0</b><span>Por revisar</span></div><div class="metric"><b id="approved">0</b><span>Aprobadas, no enviadas</span></div></section>
+<section class="metrics"><div class="metric"><b id="total">0</b><span>En seguimiento (no cerradas)</span></div><div class="metric"><b id="high">0</b><span>Encaje ≥ 70 (no cerradas)</span></div><div class="metric"><b id="pending">0</b><span>Por revisar</span></div><div class="metric"><b id="approved">0</b><span>Aprobadas, no enviadas</span></div></section>
 <div class="toolbar" id="tabs"><button data-tab="all" class="active">Todas</button><button data-tab="review">Por revisar</button><button data-tab="approved">Aprobadas</button><button data-tab="rejected">Descartadas</button><button id="csv">Exportar CSV</button></div>
-<div class="toolbar"><input id="query" placeholder="Buscar empresa, cargo o país..." aria-label="Buscar"><select id="work"><option value="all">Todas las modalidades</option><option value="remote">Remoto (sin verificar elegibilidad)</option><option value="other">Otras</option></select><select id="sort"><option value="score">Mayor puntaje</option><option value="date">Más reciente</option></select></div>
-<section id="jobs" class="jobs" aria-live="polite"></section>
+<div class="toolbar"><input id="query" placeholder="Buscar empresa, cargo o país..." aria-label="Buscar">
+<select id="availability" aria-label="Estado de la oferta"><option value="reviewed">Enlaces revisados</option><option value="ats">Incluye ATS reciente</option><option value="all">Todas menos cerradas</option><option value="closed">Cerradas / desactualizadas</option></select>
+<select id="geo" aria-label="Lugar de trabajo"><option value="all">Todos los lugares</option><option value="remote_chile">Remoto desde Chile</option><option value="santiago">Santiago</option><option value="chile_regions">Otras ciudades de Chile</option><option value="abroad">Fuera de Chile / relocation</option></select>
+<select id="work" aria-label="Modalidad"><option value="all">Todas las modalidades</option><option value="remote">Remoto</option><option value="hybrid">Híbrido</option><option value="onsite">Presencial</option><option value="unknown">Sin confirmar</option></select>
+<select id="sort"><option value="score">Mayor puntaje</option><option value="date">Más reciente</option></select></div>
+<p id="listingSummary" role="status"></p><section id="jobs" class="jobs" aria-live="polite"></section>
 <section id="cvPanel" style="border:1px solid #31517c;border-radius:14px;padding:20px;margin:25px 0;background:#121e31">
   <h2 style="margin-top:0">Mi perfil y CV maestro</h2>
   <p class="muted">Editor privado disponible al iniciar sesión. El documento importado previamente está en una tabla privada de preparación hasta vincularlo a tu cuenta. No se publicará en GitHub.</p>
@@ -48,7 +58,7 @@ dialog{box-shadow:0 32px 90px #0009}
   <p id="cvMessage" class="muted" role="status">Inicia sesión para gestionar tu CV.</p>
   <div class="actions"><button id="cvSave" class="primary" disabled>Guardar CV</button><button id="cvRefresh">Actualizar desde Supabase</button><button id="cvDownload" disabled>Exportar TXT</button></div>
 </section>
-<p class="notice">MVP · Los resultados proceden de APIs públicas de empleo, sin verificación de patrocinio migratorio o elegibilidad desde Chile. Los puntajes son heurísticos. Los estados se guardan solo en este navegador. Este repositorio es público: no publiques información personal ni CV.</p>
+<p class="notice">MVP · Los enlaces en estado «ATS reciente» pueden requerir validación adicional. «Remoto» en otro país NO significa remoto desde Chile. Los puntajes son heurísticos. Las decisiones se sincronizan solo cuando inicias sesión. Este repositorio es público: no publiques información personal ni CV.</p>
 </main>
 <dialog id="loginDialog"><h2>Acceso personal</h2><p class="muted">Ingresa tu correo para recibir un enlace de acceso. Tus decisiones se guardarán en Supabase. Sin iniciar sesión puedes explorar ofertas, pero las aprobaciones no se sincronizan.</p><form id="loginForm"><label for="loginEmail">Correo electrónico</label><input id="loginEmail" type="email" required autocomplete="email" style="width:100%;margin:12px 0" placeholder="tu@correo.com"><p id="loginMessage" class="muted" role="status"></p><div class="actions"><button class="primary" type="submit">Enviar enlace</button><button id="dismissLogin" type="button">Cerrar</button></div></form></dialog><dialog id="detail"><h2 id="detailTitle"></h2><p id="detailMeta" class="muted"></p><p id="detailReason"></p><div id="detailDesc" class="desc"></div><p><a id="detailLink" target="_blank" rel="noopener noreferrer">Ver publicación original</a></p><button id="close">Cerrar</button></dialog>
 <script>
