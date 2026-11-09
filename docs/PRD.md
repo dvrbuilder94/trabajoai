@@ -204,3 +204,13 @@ A user can open a verified live URL, sign in, see at least one independently che
 - **External HTTP/smoke test not completed**: browser/web fetch could not independently access URL from this environment. Verify live page manually.
 - **Git automatic deploy not linked**: Vercel GitHub integration reported `repo_not_found` / `github_response_error` (401). Current deployment is a snapshot; future GitHub commits must be manually redeployed until integration is repaired.
 - **Auth still needs redirect allowlist** for `https://trabajoai.vercel.app/` in Supabase Auth; do not assert login works before an authenticated test.
+
+
+## Delivery log — 2026-11-08 (data-first pivot)
+- User priority: freeze UI expansion and prioritize source coverage, real listings, validation, and daily ingestion.
+- Supabase AIJOBS now contains **13 sourced job candidates**, including 10 additionally seeded on this date; 9 have heuristic score >=75. This is not 13 confirmed open applications.
+- Added Ashby public posting API support to Python collector and relevant-title filtering to reduce irrelevant postings.
+- Expanded `data/sources.json` to **20 ATS source definitions** (Greenhouse, Lever, Ashby). This is *configuration only* until scheduled runs are verified.
+- Marked a WON posting with link failure after an external fetch returned HTTP 404. Availability and work eligibility must be independently checked before application.
+- Vercel production reads public listings directly from Supabase. Changes to data do not require redeploy; changes to collector code require GitHub Actions to run.
+- Next acceptance gate: independently verify job collector execution, source success/fail counts, write to Supabase via GitHub Action secrets, and weekly stale/closed handling.
