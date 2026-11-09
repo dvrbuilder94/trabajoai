@@ -71,6 +71,13 @@ class GeoFilterTests(unittest.TestCase):
         self.assertEqual(value["metadata"]["location_category"], "remote_chile")
         self.assertEqual(value["metadata"]["availability_status"], "ats_listed")
 
+    def test_santiago_is_not_misclassified(self):
+        value = sync_supabase.normalize({**self.base, "location": "Santiago de Chile", "work_type": "other"}, "2026-11-09T00:00:00Z")
+        self.assertEqual(value["metadata"]["location_category"], "santiago")
+        self.assertEqual(value["metadata"]["remote_from_chile"], "unknown")
+
+    def test_buenos_aires_remote_is_not_chile(self):
+        self.assertIsNone(sync_supabase.normalize({**self.base, "location": "Buenos Aires | Remote"}, "2026-11-09T00:00:00Z"))
     def test_remote_latam_requires_country_confirmation(self):
         value = sync_supabase.normalize({**self.base, "location": "Latin America"}, "2026-11-09T00:00:00Z")
         self.assertEqual(value["metadata"]["location_category"], "unknown")
