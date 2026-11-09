@@ -50,6 +50,21 @@ def collect(source):
             yield format_job(company, j.get("id"), j.get("text",""),
                 (j.get("categories") or {}).get("location",""),
                 plain(j.get("descriptionPlain") or j.get("description","")), j.get("hostedUrl",""))
+    elif kind == "ashby":
+        data = get_json(f"https://api.ashbyhq.com/posting-api/job-board/{slug}?includeCompensation=true")
+        for j in data.get("jobs", []):
+            if not j.get("isListed", True):
+                continue
+            comp = j.get("compensation") or {}
+            job = format_job(company, j.get("jobUrl") or j.get("applyUrl"),
+                j.get("title", ""), j.get("location", ""),
+                plain(j.get("descriptionPlain") or j.get("descriptionHtml", "")),
+                j.get("jobUrl") or j.get("applyUrl") or "",
+                j.get("publishedAt", ""))
+            if job:
+                job["work_type"] = "remote" if j.get("workplaceType") == "Remote" else "other"
+                job["salary"] = comp.get("compensationTierSummary", "") or ""
+                yield job
     else:
         raise ValueError(f"Unknown source type: {kind}")
 
@@ -59,7 +74,16 @@ def main():
         try:
             batch = [j for j in collect(source) if j]
             for job in batch:
-                jobs[job["id"]] = job
+                title = job["title"].lower()
+                relevant = any(term in title for term in (
+                    "strategy", "strategic", "business development", "partnership",
+                    "product manager", "venture", "corporate development",
+                    "payment", "capital markets", "growth manager", "country manager",
+                    "account executive", "operations lead", "commercial manager",
+                    "finance manager", "financial strategy", "institutional sales",
+                    "general manager", "chief of staff", "go to market", "ai strategist"))
+                if relevant and job["score"] >= 30:
+                    jobs[job["id"]] = job
             successes += 1
             print(source["company"], len(batch))
         except (OSError, ValueError, KeyError, TypeError) as exc:
