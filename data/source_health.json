@@ -1,0 +1,191 @@
+{
+  "checked_at": "2026-11-09T00:50:39.317042+00:00",
+  "sources": [
+    {
+      "company": "Stripe",
+      "type": "greenhouse",
+      "slug": "stripe",
+      "status": "ok",
+      "fetched": 766,
+      "matching": 199,
+      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+    },
+    {
+      "company": "Coinbase",
+      "type": "greenhouse",
+      "slug": "coinbase",
+      "status": "ok",
+      "fetched": 283,
+      "matching": 22,
+      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+    },
+    {
+      "company": "Plaid",
+      "type": "greenhouse",
+      "slug": "plaid",
+      "status": "error",
+      "fetched": 0,
+      "matching": 0,
+      "checked_at": "2026-11-09T00:50:39.317042+00:00",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "company": "Brex",
+      "type": "greenhouse",
+      "slug": "brex",
+      "status": "ok",
+      "fetched": 268,
+      "matching": 42,
+      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+    },
+    {
+      "company": "Wise",
+      "type": "lever",
+      "slug": "wise",
+      "status": "error",
+      "fetched": 0,
+      "matching": 0,
+      "checked_at": "2026-11-09T00:50:39.317042+00:00",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "company": "Paymentology",
+      "type": "ashby",
+      "slug": "paymentology",
+      "status": "ok",
+      "fetched": 8,
+      "matching": 0,
+      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+    },
+    {
+      "company": "Kraken",
+      "type": "ashby",
+      "slug": "kraken.com",
+      "status": "ok",
+      "fetched": 89,
+      "matching": 5,
+      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+    },
+    {
+      "company": "The Global Talent Co.",
+      "type": "ashby",
+      "slug": "the-global-talent-co",
+      "status": "ok",
+      "fetched": 28,
+      "matching": 3,
+      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+    },
+    {
+      "company": "Scale Army",
+      "type": "ashby",
+      "slug": "Scale Army Careers",
+      "status": "ok",
+      "fetched": 59,
+      "matching": 1,
+      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+    },
+    {
+      "company": "Apply Digital",
+      "type": "ashby",
+      "slug": "applydigital",
+      "status": "error",
+      "fetched": 0,
+      "matching": 0,
+      "checked_at": "2026-11-09T00:50:39.317042+00:00",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "company": "WON",
+      "type": "ashby",
+      "slug": "won.ai",
+      "status": "empty",
+      "fetched": 0,
+      "matching": 0,
+      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+    },
+    {
+      "company": "Telepatia",
+      "type": "ashby",
+      "slug": "telepatia",
+      "status": "empty",
+      "fetched": 0,
+      "matching": 0,
+      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+    },
+    {
+      "company": "Yuno",
+      "type": "lever",
+      "slug": "yuno",
+      "status": "ok",
+      "fetched": 11,
+      "matching": 3,
+      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+    },
+    {
+      "company": "Binance",
+      "type": "lever",
+      "slug": "binance",
+      "status": "ok",
+      "fetched": 4,
+      "matching": 1,
+      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+    },
+    {
+      "company": "DEUNA",
+      "type": "lever",
+      "slug": "deuna",
+      "status": "ok",
+      "fetched": 17,
+      "matching": 3,
+      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+    },
+    {
+      "company": "Apply Digital",
+      "type": "lever",
+      "slug": "applydigital",
+      "status": "ok",
+      "fetched": 10,
+      "matching": 0,
+      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+    },
+    {
+      "company": "Despegar",
+      "type": "lever",
+      "slug": "despegar",
+      "status": "ok",
+      "fetched": 115,
+      "matching": 3,
+      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+    },
+    {
+      "company": "Minders",
+      "type": "lever",
+      "slug": "minders",
+      "status": "ok",
+      "fetched": 22,
+      "matching": 0,
+      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+    },
+    {
+      "company": "Emma",
+      "type": "lever",
+      "slug": "emma-sleep",
+      "status": "ok",
+      "fetched": 67,
+      "matching": 8,
+      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+    },
+    {
+      "company": "Aircall",
+      "type": "greenhouse",
+      "slug": "aircallioinc",
+      "status": "ok",
+      "fetched": 85,
+      "matching": 14,
+      "checked_at": "2026-11-09T00:50:39.317042+00:00"
+    }
+  ],
+  "total_fetched": 1832,
+  "matched": 304,
+  "failed": 3
+}
