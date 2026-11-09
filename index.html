@@ -34,7 +34,7 @@ button.active,button.primary{background:linear-gradient(130deg,#336fe7,#255ac3);
 dialog{box-shadow:0 32px 90px #0009}
 @media(min-width:900px){.jobs{grid-template-columns:repeat(2,minmax(0,1fr))}.job{min-height:255px}}
 </style></head>
-<body><header><div><strong>◈ TrabajoAI</strong><div class="muted" style="font-size:12px">JobHunter · revisión personal de oportunidades</div></div><small id="loaded">Cargando...</small></header>
+<body><header><div><strong>◈ TrabajoAI</strong><div class="muted" style="font-size:12px">JobHunter · revisión personal de oportunidades</div></div><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><small id="loaded">Cargando...</small><button id="accountButton" type="button">Iniciar sesión</button></div></header>
 <main><h1>Oportunidades</h1><p class="muted">Las postulaciones solo se enviarán con tu aprobación explícita cuando implementemos esa función.</p>
 <div id="modeInfo" style="display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;border:1px solid #31517c;background:linear-gradient(130deg,#122a49,#122136);border-radius:13px;padding:14px 17px;margin:22px 0"><div><strong id="modeTitle">Ofertas públicas</strong><div id="modeDescription" class="muted" style="font-size:12px;margin-top:5px">Si aún no hay vacantes, revisa una demostración del flujo visual.</div></div><a id="modeLink" href="?demo=1" style="border:1px solid #4d79bf;padding:9px 12px;border-radius:9px;text-decoration:none">Ver demo visual</a></div>
 <section class="metrics"><div class="metric"><b id="total">0</b><span>Vacantes</span></div><div class="metric"><b id="high">0</b><span>Encaje ≥ 70</span></div><div class="metric"><b id="pending">0</b><span>Por revisar</span></div><div class="metric"><b id="approved">0</b><span>Aprobadas, no enviadas</span></div></section>
@@ -43,7 +43,7 @@ dialog{box-shadow:0 32px 90px #0009}
 <section id="jobs" class="jobs" aria-live="polite"></section>
 <p class="notice">MVP · Los resultados proceden de APIs públicas de empleo, sin verificación de patrocinio migratorio o elegibilidad desde Chile. Los puntajes son heurísticos. Los estados se guardan solo en este navegador. Este repositorio es público: no publiques información personal ni CV.</p>
 </main>
-<dialog id="detail"><h2 id="detailTitle"></h2><p id="detailMeta" class="muted"></p><p id="detailReason"></p><div id="detailDesc" class="desc"></div><p><a id="detailLink" target="_blank" rel="noopener noreferrer">Ver publicación original</a></p><button id="close">Cerrar</button></dialog>
+<dialog id="loginDialog"><h2>Acceso personal</h2><p class="muted">Ingresa tu correo para recibir un enlace de acceso. Tus decisiones se guardarán en Supabase. Sin iniciar sesión puedes explorar ofertas, pero las aprobaciones no se sincronizan.</p><form id="loginForm"><label for="loginEmail">Correo electrónico</label><input id="loginEmail" type="email" required autocomplete="email" style="width:100%;margin:12px 0" placeholder="tu@correo.com"><p id="loginMessage" class="muted" role="status"></p><div class="actions"><button class="primary" type="submit">Enviar enlace</button><button id="dismissLogin" type="button">Cerrar</button></div></form></dialog><dialog id="detail"><h2 id="detailTitle"></h2><p id="detailMeta" class="muted"></p><p id="detailReason"></p><div id="detailDesc" class="desc"></div><p><a id="detailLink" target="_blank" rel="noopener noreferrer">Ver publicación original</a></p><button id="close">Cerrar</button></dialog>
 <script>
 let jobs=[],tab='all';
 const DEMO_JOBS=[
@@ -54,9 +54,9 @@ const DEMO_JOBS=[
 const isDemo=()=>new URLSearchParams(location.search).has('demo');
 if(isDemo()){document.getElementById('modeTitle').textContent='Modo demostración · Datos ficticios';document.getElementById('modeDescription').textContent='Estas tres vacantes son ejemplos de interfaz, no empleos publicados.';document.getElementById('modeLink').textContent='Ver empleos reales';document.getElementById('modeLink').href=location.pathname;}
 const el=id=>document.getElementById(id);
-const statuses=()=>{try{return JSON.parse(localStorage.getItem('trabajoai-status')||'{}')}catch{return {}}};
+const statuses=()=>{try{return window.trabajoAuth?.isLoggedIn()?(window.remoteStatuses||{}):JSON.parse(localStorage.getItem('trabajoai-status')||'{}')}catch{return {}}};
 const status=id=>statuses()[id]||'review';
-function setStatus(id,value){const m=statuses();m[id]=value;localStorage.setItem('trabajoai-status',JSON.stringify(m));render()}
+async function setStatus(id,value){if(window.trabajoAuth?.isLoggedIn()){try{await window.trabajoAuth.setDecision(id,value);window.remoteStatuses={...(window.remoteStatuses||{}),[id]:value};render()}catch(err){alert('No se pudo guardar en Supabase: '+err.message)}}else{const m=statuses();m[id]=value;localStorage.setItem('trabajoai-status',JSON.stringify(m));render()}}
 const escapeHTML=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function render(){const query=el('query').value.toLowerCase(),work=el('work').value,sort=el('sort').value;
 let list=jobs.filter(j=>(tab==='all'||status(j.id)===tab)&&(work==='all'||j.work_type===work)&&[j.title,j.company,j.location,j.description].join(' ').toLowerCase().includes(query));
@@ -80,4 +80,4 @@ async function loadListings(){
   return {data:await r.json(),source:'GitHub'};
 }
 loadListings().then(({data,source})=>{jobs=isDemo()?DEMO_JOBS:(Array.isArray(data)?data:[]);el('loaded').textContent=isDemo()?'MODO DEMO · datos ficticios':jobs.length+' vacantes · '+source;render()}).catch(()=>{el('loaded').textContent='Sin datos';el('jobs').innerHTML='<div class="empty">No se pudieron cargar las vacantes. Comprueba la configuración de Supabase o ejecuta el recolector de GitHub.</div>'});
-</script></body></html>
+document.addEventListener('trabajo-decisions-change',render);document.addEventListener('trabajo-auth-change',render);</script><script src="./auth.js" defer></script></body></html>
