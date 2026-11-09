@@ -12,6 +12,17 @@ MVP de búsqueda y revisión de empleos, sin Lovable. **No postula automáticame
 - Los datos reales se cargarán tras una ejecución exitosa del workflow `Collect public job listings` en **Actions**. Las fuentes se configuran en `data/sources.json`.
 - GitHub Pages muestra contenido público. **No subir CV ni datos personales al sitio estático**; el CV maestro se guarda en una tabla interna de Supabase.
 
+## Supabase sync (optional setup for fully automated persistence)
+
+The app currently uses **Supabase AIJOBS** for public job listings. Three initial candidate listings were manually imported on 2026-11-08, each flagged **unverified for Chile eligibility and application status**. The collector also writes public `data/jobs.json`.
+
+For automated GitHub Actions → Supabase sync, configure two **GitHub Actions repository secrets** under **Settings → Secrets and variables → Actions**:
+
+1. `SUPABASE_URL` = `https://lpbqzagdforlafvavgkx.supabase.co`
+2. `SUPABASE_SERVICE_ROLE_KEY` = your Supabase **secret/service_role** key, obtained from the Supabase dashboard. Do **not** paste it into GitHub files, chat, browser code, screenshots, or issues. The GitHub Actions workflow passes it only to a server-side Python process.
+
+Until these are configured, the sync script intentionally skips DB writes and the generated public JSON remains a fallback. There is no user login yet: decisions are currently browser-local and are not submitted applications.
+
 ## Cómo funciona
 - Dashboard estático en `index.html`.
 - `scripts/collect.py` obtiene publicaciones de APIs públicas Greenhouse/Lever configuradas en `data/sources.json`.
