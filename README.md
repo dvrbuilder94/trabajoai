@@ -4,6 +4,18 @@
 
 MVP de búsqueda y revisión de empleos, sin Lovable. **No postula automáticamente**.
 
+## Deploy visual con Vercel (alternativa a GitHub Pages)
+
+La app es estática (HTML + JS + CSS) y no requiere Node/Next.js ni Lovable. El archivo `vercel.json` ya está en el repositorio.
+
+1. Conecta Vercel a GitHub con permisos al repositorio `dvrbuilder94/trabajoai`.
+2. Importa ese repositorio en Vercel como proyecto. Preset: **Other**. Framework: **Other** (sitio estático); **Root Directory**: `./`; **Build Command**: vacío; **Output Directory**: `./` si el asistente lo pide.
+3. Publica y abre `https://<tu-proyecto>.vercel.app/?demo=1`. No se puede anticipar la URL exacta antes de desplegar.
+4. En Supabase [Auth URL Configuration](https://supabase.com/dashboard/project/lpbqzagdforlafvavgkx/auth/url-configuration) agrega **el origen real de Vercel** con barra final a **Redirect URLs** y configura Site URL con el dominio principal que elijas. No uses un dominio hipotético.
+5. Prueba login y aprobación. La app solo maneja la **publishable key** en el navegador; no escribas una service-role key en variables `VITE_*` o en el HTML.
+
+El repositorio puede permanecer público. El contenido privado (CV, sesiones, decisiones) debe residir en Supabase con RLS y autenticación comprobadas.
+
 ## Ver la aplicación
 
 - Web: https://dvrbuilder94.github.io/trabajoai/
