@@ -1,5 +1,7 @@
 # TrabajoAI — JobHunter AI
 
+**Product requirements:** [PRD v1.0](docs/PRD.md) — product scope, acceptance criteria, security and milestones. This document is the source of truth for implementation.
+
 MVP de búsqueda y revisión de empleos, sin Lovable. **No postula automáticamente**.
 
 ## Ver la aplicación
