@@ -45,7 +45,7 @@ def collect(source):
         for j in data.get("jobs", []):
             yield format_job(company, j.get("id"), j.get("title",""),
                 (j.get("location") or {}).get("name",""), plain(j.get("content","")),
-                j.get("absolute_url",""), j.get("updated_at",""))
+                j.get("absolute_url",""), "")
     elif kind == "lever":
         data = get_json(f"https://api.lever.co/v0/postings/{slug}?mode=json")
         for j in data:
