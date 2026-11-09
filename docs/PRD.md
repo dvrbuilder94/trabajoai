@@ -225,3 +225,15 @@ A user can open a verified live URL, sign in, see at least one independently che
 - Updated four existing listings against indexed official ATS pages (including corrected Telepatia title/seniority and Yuno specialized TAM gap).
 - Seeded 12 curated international relocation candidates from the live GitHub collector artifact with sponsorship/salary clearly **unknown**. Supabase now has **25** candidate listings (8 explicitly Chile-located, 12 relocation candidates).
 - Caveat: GitHub workflow has not been verified end-to-end for Supabase sync; required Actions secrets may still be missing. These database records were inserted through the connected Supabase tool.
+
+
+## Delivery log — 2026-11-09 (quality of job links and locations)
+- Fixed `scripts/sync_supabase.py` regex: Santiago is recognized as a city, not accidentally lost because of double-escaped word boundaries.
+- Added regression tests for `Santiago de Chile` (non-remote), `Buenos Aires | Remote` (not Chile eligible), and `Remote - USA` (excluded).
+- Added official Greenhouse / Lever ATS boards for **Ebury, EBANX and Aleph**, resulting in 23 configured sources (20 active; 3 disabled for previous 404 errors).
+- Added 3 vetted job candidates: Ebury Product Manager - Payments (Santiago hybrid, 4 office days/week), EBANX Product Manager South Cone (Buenos Aires remote but Argentina work authorization required), Aleph Sr. Client Partner Disney (Santiago hybrid). Documented scope and unknown salary.
+- Rechecked live official pages for Minders and Emma; corrected Minders fit score to reflect required SaaS sales closure experience and English. Reclassified Emma as hybrid in Mexico despite managing Chile eCommerce.
+- Database recheck: 28 total, 7 verified, 7 stale, 3 verified postings in Santiago. Remaining listings are separately labeled as page reachable / ATS indexed / unverified, **not guaranteed active applications**.
+- Default web filter now **Ofertas confirmadas**, with separate options to include accessible pages and ATS-only data. Published a new production Vercel deployment `dpl_E4M7xNWpkpXngDLfToqAkTeubtHc`, state READY, alias `https://trabajoai.vercel.app/`.
+- Source date correction: Greenhouse `updated_at` is no longer presented as original posting date; prefer unknown over an invented published date.
+- GitHub Actions test results and independent browser accessibility have not been fully verified yet.
