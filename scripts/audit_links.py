@@ -78,7 +78,9 @@ def update(row, found):
         note = "Cargo presente en cartelera oficial ATS el " + CHECKED[:10] + "; revisar requisitos antes de postular."
     else:
         meta["not_found_streak"] = int(meta.get("not_found_streak") or 0) + 1
-        if meta["not_found_streak"] >= 2:
+        if meta.get("availability_status") == "closed":
+            note = "Oferta ya marcada desactualizada; continúa ausente del ATS oficial."
+        elif meta["not_found_streak"] >= 2:
             meta["availability_status"] = "closed"
             note = "Cargo ausente en dos revisiones de la cartelera oficial ATS. Enlace posiblemente caducado."
         else:
