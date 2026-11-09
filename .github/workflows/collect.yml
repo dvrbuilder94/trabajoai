@@ -22,8 +22,11 @@ jobs:
         with:
           python-version: '3.12'
       - name: Collect public vacancies
+        id: collect
+        continue-on-error: true
         run: python scripts/collect.py
       - name: Sync public listings to Supabase
+        if: steps.collect.outcome == 'success'
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
@@ -32,5 +35,10 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/jobs.json
+          git add data/jobs.json data/source_health.json
           git diff --cached --quiet || (git commit -m 'data: refresh job listings' && git push)
+      - name: Report collector failure
+        if: steps.collect.outcome != 'success'
+        run: |
+          echo 'Collector failed or returned no matching jobs. Previous listings retained.' >&2
+          exit 1
