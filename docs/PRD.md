@@ -186,3 +186,12 @@ A user can open a verified live URL, sign in, see at least one independently che
 - Added `docs/SETUP.md` for Pages deployment, Supabase Auth redirect URL, and GitHub Actions secret setup.
 - GitHub Actions CI checks `auth.js` syntax and Pages deploys on auth code updates.
 - **Unverified:** Pages HTTP availability, live magic-link login, cross-device persistence, collection run success. Do not call these done.
+
+
+## Delivery log — 2026-11-08 (M1 profile editor)
+- Added `profile.js` authenticated master CV editor, private save/load in `public.candidate_profiles` with owner-scoped RLS, TXT export and explicit status.
+- Fixed email login link redirect parameter to Auth API `redirect_to`; requires hosted Auth redirect allowlist to actually work.
+- Demo approvals isolated from production database (demo job IDs have no DB records).
+- CI checks `profile.js` syntax; Pages workflow watches changes to it.
+- Verified policies in database: `candidate_profiles`, `cv_variants`, `job_decisions` are owner-scoped with `auth.uid() = user_id`; `job_listings` is publicly readable.
+- **Outstanding:** GitHub Pages and login not tested in browser; original CV staged privately and not yet associated to registered user; no job submitted; `internal.cv_imports` RLS advisory still pending review.
