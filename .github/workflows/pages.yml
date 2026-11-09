@@ -4,6 +4,7 @@ on:
     branches: [main]
     paths:
       - 'index.html'
+      - 'auth.js'
       - 'data/jobs.json'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
