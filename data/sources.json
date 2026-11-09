@@ -13,7 +13,9 @@
     {
       "type": "greenhouse",
       "company": "Plaid",
-      "slug": "plaid"
+      "slug": "plaid",
+      "enabled": false,
+      "reason": "ATS endpoint returned HTTP 404 in last source-health run; find current official board before re-enabling"
     },
     {
       "type": "greenhouse",
@@ -23,7 +25,9 @@
     {
       "type": "lever",
       "company": "Wise",
-      "slug": "wise"
+      "slug": "wise",
+      "enabled": false,
+      "reason": "ATS endpoint returned HTTP 404 in last source-health run; find current official board before re-enabling"
     },
     {
       "type": "ashby",
@@ -48,7 +52,9 @@
     {
       "type": "ashby",
       "company": "Apply Digital",
-      "slug": "applydigital"
+      "slug": "applydigital",
+      "enabled": false,
+      "reason": "ATS endpoint returned HTTP 404 in last source-health run; find current official board before re-enabling"
     },
     {
       "type": "ashby",
