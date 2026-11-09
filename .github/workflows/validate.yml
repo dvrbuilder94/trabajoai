@@ -16,7 +16,8 @@ jobs:
           python-version: '3.12'
       - name: Check collector syntax and source JSON
         run: |
-          python -m py_compile scripts/collect.py
+          python -m py_compile scripts/collect.py scripts/sync_supabase.py scripts/audit_links.py
+          python -m unittest discover -s tests -v
           python -m json.tool data/sources.json > /dev/null
           python -m json.tool data/jobs.json > /dev/null
           python -m json.tool vercel.json > /dev/null
