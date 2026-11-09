@@ -94,10 +94,10 @@
   }
   async function sendLink(email) {
     const redirect = location.origin + location.pathname;
-    await call('/auth/v1/otp', {
+    await call('/auth/v1/otp?redirect_to=' + encodeURIComponent(redirect), {
       method: 'POST',
       headers: headers(null, {'Content-Type': 'application/json'}),
-      body: JSON.stringify({email, create_user: true, email_redirect_to: redirect}),
+      body: JSON.stringify({email, create_user: true}),
     });
   }
   async function signOut() {
@@ -136,6 +136,8 @@
   }
   window.trabajoAuth = {
     isLoggedIn: () => !!user,
+    getEmail: () => user?.email || null,
+    withSession,
     setDecision,
     signOut,
     async reload() { await session(); announce(); await loadSavedDecisions(); },
