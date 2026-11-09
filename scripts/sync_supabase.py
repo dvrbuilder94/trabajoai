@@ -50,7 +50,7 @@ def normalize(item, timestamp):
             "reason": str(item.get("reason") or ""),
             "geo_eligibility": "confirmed" if chile else "needs_confirmation",
             "availability_status": "ats_listed",
-            "location_category": ("remote_chile" if chile and str(item.get("work_type")) == "remote" else "santiago" if re.search(r"\\bsantiago\\b", loc, re.I) else "unknown"),
+            "location_category": ("remote_chile" if chile and str(item.get("work_type")) == "remote" else "santiago" if re.search(r"\bsantiago\b", loc, re.I) else "unknown"),
             "work_arrangement": "remote" if str(item.get("work_type")) == "remote" else "unknown",
             "checked_at": timestamp[:10],
             "remote_from_chile": "confirmed" if chile and str(item.get("work_type")) == "remote" else "unknown",
