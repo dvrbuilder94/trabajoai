@@ -19,6 +19,7 @@ jobs:
           python -m py_compile scripts/collect.py
           python -m json.tool data/sources.json > /dev/null
           python -m json.tool data/jobs.json > /dev/null
+          python -m json.tool vercel.json > /dev/null
       - name: Check dashboard JavaScript syntax
         run: |
           python - <<'PY'
