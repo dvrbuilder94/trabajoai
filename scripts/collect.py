@@ -50,7 +50,7 @@ def collect(source):
         data = get_json(f"https://api.lever.co/v0/postings/{slug}?mode=json")
         for j in data:
             yield format_job(company, j.get("id"), j.get("text",""),
-                (j.get("categories") or {}).get("location",""),
+                ", ".join(dict.fromkeys([(j.get("categories") or {}).get("location", "")] + ((j.get("categories") or {}).get("allLocations") or []))).strip(", "),
                 plain(j.get("descriptionPlain") or j.get("description","")), j.get("hostedUrl",""))
     elif kind == "ashby":
         data = get_json(f"https://api.ashbyhq.com/posting-api/job-board/{slug}?includeCompensation=true")
@@ -59,7 +59,7 @@ def collect(source):
                 continue
             comp = j.get("compensation") or {}
             job = format_job(company, j.get("jobUrl") or j.get("applyUrl"),
-                j.get("title", ""), j.get("location", ""),
+                j.get("title", ""), ", ".join(dict.fromkeys([str(j.get("location") or "")] + [x.get("location", "") if isinstance(x, dict) else str(x) for x in (j.get("secondaryLocations") or [])])).strip(", "),
                 plain(j.get("descriptionPlain") or j.get("descriptionHtml", "")),
                 j.get("jobUrl") or j.get("applyUrl") or "",
                 j.get("publishedAt", ""))
@@ -74,6 +74,9 @@ def main():
     jobs, successes, failures, source_health = {}, 0, [], []
     checked_at = datetime.now(timezone.utc).isoformat()
     for source in SOURCES:
+        if source.get("enabled", True) is False:
+            source_health.append({"company": source["company"], "type": source["type"], "slug": source["slug"], "status": "disabled", "fetched": 0, "matching": 0, "checked_at": checked_at})
+            continue
         try:
             batch = [j for j in collect(source) if j]
             for job in batch:
