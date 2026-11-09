@@ -73,7 +73,7 @@ async function loadListings(){
   try {
     const r=await fetch(SUPABASE_URL+'/rest/v1/job_listings?select=*&order=score.desc&limit=1000',
       {headers:{apikey:SUPABASE_PUBLISHABLE_KEY,'Accept':'application/json'}});
-    if(r.ok){const data=await r.json();if(Array.isArray(data)&&data.length) return {data,source:'Supabase'};}
+    if(r.ok){const data=await r.json();if(Array.isArray(data)&&data.length) return {data:data.map(j=>({...j,reason:j.reason||j.metadata?.reason||'',salary:j.salary_text||''})),source:'Supabase'};}
   } catch(e){console.warn('Supabase unavailable',e);}
   const r=await fetch('./data/jobs.json',{cache:'no-store'});
   if(!r.ok)throw Error('Could not load data/jobs.json');
