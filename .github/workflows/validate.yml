@@ -1,0 +1,32 @@
+name: Validate TrabajoAI
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check collector syntax and source JSON
+        run: |
+          python -m py_compile scripts/collect.py
+          python -m json.tool data/sources.json > /dev/null
+          python -m json.tool data/jobs.json > /dev/null
+      - name: Check dashboard JavaScript syntax
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          page=Path('index.html').read_text()
+          snippets=re.findall(r'<script>(.*?)</script>', page, re.S)
+          assert len(snippets)==1, 'Expected one inline script'
+          Path('/tmp/trabajoai-app.js').write_text(snippets[0])
+          PY
+          node --check /tmp/trabajoai-app.js
