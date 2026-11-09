@@ -31,3 +31,4 @@ jobs:
           PY
           node --check /tmp/trabajoai-app.js
           node --check auth.js
+          node --check profile.js
