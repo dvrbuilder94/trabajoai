@@ -121,17 +121,19 @@ Measure: unique open roles/new roles per run; percent with working official link
 - [x] Collector code and scheduled GitHub Actions workflow committed.
 - [x] Initial Supabase schema committed and applied.
 - [x] Existing CV text imported into internal Supabase staging table.
-- [ ] Confirm live GitHub Pages deployment succeeds and app loads on mobile.
+- [ ] Confirm live GitHub Pages deployment succeeds and app loads on mobile; workflow and explicit setup guide committed.
 - [ ] Confirm scheduled collector runs successfully and produces fresh postings from source APIs (unverified as of latest check).
 - [x] Seed three real-source job *candidates* in Supabase, explicitly marked as not independently verified for application availability or Chile eligibility.
 - [x] Commit GitHub Actions → Supabase sync script with server-side credentials and fallback to public JSON.
 - [ ] Configure GitHub Actions secrets and verify end-to-end DB sync; verify links and location requirements.
 - [ ] Display real jobs with evidence, refresh timestamp and **no demo leakage**.
-- [ ] Run basic security verification of private CV staging area and RLS.
+- [ ] Run basic security verification of private CV staging area and RLS; staging RLS advisory remains unresolved.
 
 ### M1: Useful personal dashboard
-- [ ] Supabase Auth (account provisioning and sign-in).
-- [ ] Decisions in Supabase; persist on multiple devices.
+- [x] Supabase passwordless Auth UI and owner-scoped decisions client committed (code only).
+- [ ] Validate email redirect configuration, first real sign-in, refresh and logout.
+- [x] Client calls to persist decisions in Supabase via RLS committed.
+- [ ] Verify decisions persist between devices through a real authenticated session.
 - [ ] Source health, job statuses, deduplication, verification flags.
 - [ ] Matching methodology and configurable preferences.
 - [ ] Show last successful refresh and errors.
@@ -175,3 +177,12 @@ A user can open a verified live URL, sign in, see at least one independently che
 ---
 
 **Change control:** Any new feature must map to a requirement ID or be added here before implementation. Update the checkbox, evidence link, owner and verification date when a milestone is completed.
+
+
+## Delivery log — 2026-11-08 (M1 start)
+- Created `auth.js`: passwordless email link through Supabase Auth; browser client uses publishable key, not service key.
+- `index.html` now displays sign-in, stores signed-in review decisions in `job_decisions`, and keeps offline visitor reviews local.
+- Added explicit listing verification caveats and reliable demo mode (works without APIs).
+- Added `docs/SETUP.md` for Pages deployment, Supabase Auth redirect URL, and GitHub Actions secret setup.
+- GitHub Actions CI checks `auth.js` syntax and Pages deploys on auth code updates.
+- **Unverified:** Pages HTTP availability, live magic-link login, cross-device persistence, collection run success. Do not call these done.
