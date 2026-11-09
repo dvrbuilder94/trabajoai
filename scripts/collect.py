@@ -1,10 +1,12 @@
-"""Collect job postings from public Greenhouse and Lever APIs; never applies."""
+"""Collect public Greenhouse, Lever and Ashby jobs; never submits applications."""
 import hashlib, html, json, re, sys, urllib.parse, urllib.request
+from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SOURCES = json.loads((ROOT / "data/sources.json").read_text(encoding="utf-8"))["sources"]
 OUTPUT = ROOT / "data/jobs.json"
+HEALTH = ROOT / "data/source_health.json"
 HEADERS = {"User-Agent": "TrabajoAI/0.1 (personal job research)", "Accept": "application/json"}
 POSITIVE = {"strategy": 18, "strategic": 12, "business development": 20,
             "partnership": 16, "payments": 17, "fintech": 14, "venture": 15,
@@ -69,7 +71,8 @@ def collect(source):
         raise ValueError(f"Unknown source type: {kind}")
 
 def main():
-    jobs, successes, failures = {}, 0, []
+    jobs, successes, failures, source_health = {}, 0, [], []
+    checked_at = datetime.now(timezone.utc).isoformat()
     for source in SOURCES:
         try:
             batch = [j for j in collect(source) if j]
@@ -85,12 +88,16 @@ def main():
                 if relevant and job["score"] >= 30:
                     jobs[job["id"]] = job
             successes += 1
-            print(source["company"], len(batch))
+            matching = sum(1 for j in batch if j["id"] in jobs)
+            source_health.append({"company": source["company"], "type": source["type"], "slug": source["slug"], "status": "ok" if batch else "empty", "fetched": len(batch), "matching": matching, "checked_at": checked_at})
+            print(source["company"], len(batch), "fetched /", matching, "matching")
         except (OSError, ValueError, KeyError, TypeError) as exc:
             failures.append(source["company"])
+            source_health.append({"company": source["company"], "type": source["type"], "slug": source["slug"], "status": "error", "fetched": 0, "matching": 0, "checked_at": checked_at, "error": str(exc)[:240]})
             print("FAILED", source["company"], str(exc), file=sys.stderr)
-    if not successes:
-        print("All sources failed; preserving previous jobs.json", file=sys.stderr)
+    HEALTH.write_text(json.dumps({"checked_at": checked_at, "sources": source_health, "total_fetched": sum(x["fetched"] for x in source_health), "matched": len(jobs), "failed": len(failures)}, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
+    if not successes or not jobs:
+        print("No matching listings found; preserving previous jobs.json", file=sys.stderr)
         return 1
     result = sorted(jobs.values(), key=lambda j: j["score"], reverse=True)
     OUTPUT.write_text(json.dumps(result, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
