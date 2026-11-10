@@ -1,23 +1,23 @@
 {
-  "checked_at": "2026-11-09T21:25:35.475102+00:00",
+  "checked_at": "2026-11-10T18:39:42.753609+00:00",
   "sources": [
     {
       "company": "Stripe",
       "type": "greenhouse",
       "slug": "stripe",
       "status": "ok",
-      "fetched": 772,
-      "matching": 199,
-      "checked_at": "2026-11-09T21:25:35.475102+00:00"
+      "fetched": 776,
+      "matching": 202,
+      "checked_at": "2026-11-10T18:39:42.753609+00:00"
     },
     {
       "company": "Coinbase",
       "type": "greenhouse",
       "slug": "coinbase",
       "status": "ok",
-      "fetched": 284,
+      "fetched": 285,
       "matching": 23,
-      "checked_at": "2026-11-09T21:25:35.475102+00:00"
+      "checked_at": "2026-11-10T18:39:42.753609+00:00"
     },
     {
       "company": "Plaid",
@@ -26,16 +26,16 @@
       "status": "disabled",
       "fetched": 0,
       "matching": 0,
-      "checked_at": "2026-11-09T21:25:35.475102+00:00"
+      "checked_at": "2026-11-10T18:39:42.753609+00:00"
     },
     {
       "company": "Brex",
       "type": "greenhouse",
       "slug": "brex",
       "status": "ok",
-      "fetched": 268,
+      "fetched": 276,
       "matching": 42,
-      "checked_at": "2026-11-09T21:25:35.475102+00:00"
+      "checked_at": "2026-11-10T18:39:42.753609+00:00"
     },
     {
       "company": "Wise",
@@ -44,34 +44,34 @@
       "status": "disabled",
       "fetched": 0,
       "matching": 0,
-      "checked_at": "2026-11-09T21:25:35.475102+00:00"
+      "checked_at": "2026-11-10T18:39:42.753609+00:00"
     },
     {
       "company": "Paymentology",
       "type": "ashby",
       "slug": "paymentology",
       "status": "ok",
-      "fetched": 9,
+      "fetched": 11,
       "matching": 0,
-      "checked_at": "2026-11-09T21:25:35.475102+00:00"
+      "checked_at": "2026-11-10T18:39:42.753609+00:00"
     },
     {
       "company": "Kraken",
       "type": "ashby",
       "slug": "kraken.com",
       "status": "ok",
-      "fetched": 89,
+      "fetched": 90,
       "matching": 5,
-      "checked_at": "2026-11-09T21:25:35.475102+00:00"
+      "checked_at": "2026-11-10T18:39:42.753609+00:00"
     },
     {
       "company": "The Global Talent Co.",
       "type": "ashby",
       "slug": "the-global-talent-co",
       "status": "ok",
-      "fetched": 28,
+      "fetched": 21,
       "matching": 3,
-      "checked_at": "2026-11-09T21:25:35.475102+00:00"
+      "checked_at": "2026-11-10T18:39:42.753609+00:00"
     },
     {
       "company": "Scale Army",
@@ -80,7 +80,7 @@
       "status": "ok",
       "fetched": 56,
       "matching": 1,
-      "checked_at": "2026-11-09T21:25:35.475102+00:00"
+      "checked_at": "2026-11-10T18:39:42.753609+00:00"
     },
     {
       "company": "Apply Digital",
@@ -89,7 +89,7 @@
       "status": "disabled",
       "fetched": 0,
       "matching": 0,
-      "checked_at": "2026-11-09T21:25:35.475102+00:00"
+      "checked_at": "2026-11-10T18:39:42.753609+00:00"
     },
     {
       "company": "WON",
@@ -98,7 +98,7 @@
       "status": "empty",
       "fetched": 0,
       "matching": 0,
-      "checked_at": "2026-11-09T21:25:35.475102+00:00"
+      "checked_at": "2026-11-10T18:39:42.753609+00:00"
     },
     {
       "company": "Telepatia",
@@ -107,7 +107,7 @@
       "status": "empty",
       "fetched": 0,
       "matching": 0,
-      "checked_at": "2026-11-09T21:25:35.475102+00:00"
+      "checked_at": "2026-11-10T18:39:42.753609+00:00"
     },
     {
       "company": "Yuno",
@@ -116,7 +116,7 @@
       "status": "ok",
       "fetched": 10,
       "matching": 3,
-      "checked_at": "2026-11-09T21:25:35.475102+00:00"
+      "checked_at": "2026-11-10T18:39:42.753609+00:00"
     },
     {
       "company": "Binance",
@@ -125,16 +125,16 @@
       "status": "ok",
       "fetched": 4,
       "matching": 1,
-      "checked_at": "2026-11-09T21:25:35.475102+00:00"
+      "checked_at": "2026-11-10T18:39:42.753609+00:00"
     },
     {
       "company": "DEUNA",
       "type": "lever",
       "slug": "deuna",
       "status": "ok",
-      "fetched": 17,
+      "fetched": 16,
       "matching": 3,
-      "checked_at": "2026-11-09T21:25:35.475102+00:00"
+      "checked_at": "2026-11-10T18:39:42.753609+00:00"
     },
     {
       "company": "Apply Digital",
@@ -143,16 +143,16 @@
       "status": "ok",
       "fetched": 11,
       "matching": 0,
-      "checked_at": "2026-11-09T21:25:35.475102+00:00"
+      "checked_at": "2026-11-10T18:39:42.753609+00:00"
     },
     {
       "company": "Despegar",
       "type": "lever",
       "slug": "despegar",
       "status": "ok",
-      "fetched": 116,
+      "fetched": 118,
       "matching": 3,
-      "checked_at": "2026-11-09T21:25:35.475102+00:00"
+      "checked_at": "2026-11-10T18:39:42.753609+00:00"
     },
     {
       "company": "Minders",
@@ -161,16 +161,16 @@
       "status": "ok",
       "fetched": 22,
       "matching": 0,
-      "checked_at": "2026-11-09T21:25:35.475102+00:00"
+      "checked_at": "2026-11-10T18:39:42.753609+00:00"
     },
     {
       "company": "Emma",
       "type": "lever",
       "slug": "emma-sleep",
       "status": "ok",
-      "fetched": 63,
+      "fetched": 64,
       "matching": 8,
-      "checked_at": "2026-11-09T21:25:35.475102+00:00"
+      "checked_at": "2026-11-10T18:39:42.753609+00:00"
     },
     {
       "company": "Aircall",
@@ -179,37 +179,37 @@
       "status": "ok",
       "fetched": 86,
       "matching": 14,
-      "checked_at": "2026-11-09T21:25:35.475102+00:00"
+      "checked_at": "2026-11-10T18:39:42.753609+00:00"
     },
     {
       "company": "Ebury",
       "type": "greenhouse",
       "slug": "ebury",
       "status": "ok",
-      "fetched": 157,
+      "fetched": 154,
       "matching": 15,
-      "checked_at": "2026-11-09T21:25:35.475102+00:00"
+      "checked_at": "2026-11-10T18:39:42.753609+00:00"
     },
     {
       "company": "EBANX",
       "type": "greenhouse",
       "slug": "ebanx",
       "status": "ok",
-      "fetched": 36,
+      "fetched": 35,
       "matching": 13,
-      "checked_at": "2026-11-09T21:25:35.475102+00:00"
+      "checked_at": "2026-11-10T18:39:42.753609+00:00"
     },
     {
       "company": "Aleph",
       "type": "lever",
       "slug": "aleph",
       "status": "ok",
-      "fetched": 132,
+      "fetched": 130,
       "matching": 6,
-      "checked_at": "2026-11-09T21:25:35.475102+00:00"
+      "checked_at": "2026-11-10T18:39:42.753609+00:00"
     }
   ],
-  "total_fetched": 2160,
-  "matched": 339,
+  "total_fetched": 2165,
+  "matched": 342,
   "failed": 0
 }
